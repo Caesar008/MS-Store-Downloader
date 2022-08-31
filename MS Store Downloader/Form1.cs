@@ -63,7 +63,7 @@ namespace MS_Store_Downloader
             {
                 string text = node.InnerText;
                 string link = node.GetAttributeValue("href", "");
-                if (text.ToLower().EndsWith(".appx") || text.ToLower().EndsWith(".appxbundle") || text.ToLower().EndsWith(".msixbundle"))
+                if (text.ToLower().EndsWith(".appx") || text.ToLower().EndsWith(".appxbundle") || text.ToLower().EndsWith(".msixbundle") || text.ToLower().EndsWith(".msix"))
                 {
                     ListViewItem lvi = new ListViewItem(text);
                     lvi.Tag = link;
