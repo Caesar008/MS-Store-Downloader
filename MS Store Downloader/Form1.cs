@@ -13,6 +13,8 @@ using System.Threading;
 using Microsoft.Win32;
 using System.Security;
 using HtmlAgilityPack;
+using System.Xml;
+using Newtonsoft.Json;
 
 namespace MS_Store_Downloader
 {
@@ -59,6 +61,85 @@ namespace MS_Store_Downloader
             HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
             htmlDoc.LoadHtml(responseString);
 
+            //test dotazu na WU
+            HttpClient appIdHttp2 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+            FormUrlEncodedContent ucont2 = new FormUrlEncodedContent(new Dictionary<string, string> { { "type", "ProductId" }, { "url", appID }, { "ring", checkBox1.Checked ? "WIF" : "Retail" }, { "lang", System.Globalization.CultureInfo.InstalledUICulture.Name } });
+            
+            HttpContent httpContent = new StringContent(File.ReadAllText("./cookie.xml"));
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml");
+
+            appIdHttp2.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response2 = await appIdHttp2.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx", httpContent, cancel).ConfigureAwait(false);
+            string responseString2 = await response2.Content.ReadAsStringAsync().ConfigureAwait(false);
+            string cookie = "";
+
+            HtmlAgilityPack.HtmlDocument htmlDoc2 = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc2.LoadHtml(responseString2);
+            foreach (HtmlNode node2 in htmlDoc2.DocumentNode.Descendants("EncryptedData"))
+            {
+                cookie = node2.InnerText;
+                break;
+            }
+            HttpClient appIdHttp4 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+            appIdHttp4.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response4 = await appIdHttp4.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market=CZ&locale=cs-cz&deviceFamily=Windows.Desktop");
+            string responseString4 = await response4.Content.ReadAsStringAsync().ConfigureAwait(false);
+            string data = "";
+
+            JsonTextReader json = new JsonTextReader(new StringReader(responseString4));
+            while (json.Read())
+            {
+                if (json.Value != null)
+                {
+                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "FulfillmentData")
+                    {
+                        json.Read();
+                        data = json.Value.ToString().Replace("\\", "");
+                        break;
+                    }
+                }
+            }
+            json = new JsonTextReader(new StringReader(data));
+            while (json.Read())
+            {
+                if (json.Value != null)
+                {
+                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "WuCategoryId")
+                    {
+                        json.Read();
+                        data = json.Value.ToString().Replace("\\", "");
+                        break;
+                    }
+                }
+            }
+
+            string cookie2 = File.ReadAllText("wu.xml");
+            cookie2 = cookie2.Replace("{1}", cookie).Replace("{2}", data).Replace("{3}", checkBox1.Checked ? "WIF" : "Retail");
+            HttpClient appIdHttp3 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+            
+            HttpContent httpContent2 = new StringContent(cookie2);
+            httpContent2.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml"); 
+            appIdHttp3.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response3 = await appIdHttp3.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx", httpContent2, cancel).ConfigureAwait(false);
+            string responseString3 = await response3.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            //tady číst response3 jako xml, hledat tagy xml, vzít jejich inner text a &gt;&lt; převést na ><.
+            //Pak to načíst jako nový xml a hledat tagy Files, InstallerSpecificIdentifier (to je jméno balíku),
+            // FileName (ukazuje appx, atd), SecuredFragment, UpdateID, RevisionNumber
+            // a pomocí url.xml s tím pracovat dál na vygenerování linku pomocí cookie3 a http5
+
+            string cookie3 = File.ReadAllText("wu.xml");
+            cookie2 = cookie3.Replace("{1}", cookie).Replace("{2}", data).Replace("{3}", checkBox1.Checked ? "WIF" : "Retail");
+            HttpClient appIdHttp5 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true }); 
+            HttpContent httpContent3 = new StringContent(File.ReadAllText("./url.xml"));
+            httpContent3.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml");
+            appIdHttp5.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response5 = await appIdHttp5.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured", httpContent3, cancel).ConfigureAwait(false);
+            string responseString5 = await response5.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            File.WriteAllText("./msapi.txt", responseString3);
+
+            //konec testu dotazu WU
             foreach (HtmlNode node in htmlDoc.DocumentNode.Descendants("a"))
             {
                 string text = node.InnerText;
