@@ -12,7 +12,6 @@ using System.Net;
 using System.Threading;
 using Microsoft.Win32;
 using System.Security;
-using HtmlAgilityPack;
 using System.Xml;
 using Newtonsoft.Json;
 
@@ -30,60 +29,52 @@ namespace MS_Store_Downloader
             }
             pictureBox1.Location = new Point(this.Width/2 - 64, this.Height/2 - 64);
             button2.Enabled = false;
+            comboBox1.SelectedIndex = 0;
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private string GetRing(string selection)
         {
-            if (InvokeRequired)
-                this.BeginInvoke(new Action(() => pictureBox1.Visible = true));
-            else
-                pictureBox1.Visible = true;
-            if (InvokeRequired)
-                this.BeginInvoke(new Action(() => listView1.Items.Clear()));
-            else
-                listView1.Items.Clear();
-            if (InvokeRequired)
-                this.BeginInvoke(new Action(() => button1.Enabled = false));
-            else
-                button1.Enabled = false;
-            string appID = textBox1.Text;
-            if(appID.Contains("/"))
-                appID = appID.Remove(0, appID.LastIndexOf("/") + 1);
-            if (appID.Contains("?"))
-                appID = appID.Remove(appID.IndexOf("?"));
-            HttpClient appIdHttp = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
-            FormUrlEncodedContent ucont = new FormUrlEncodedContent(new Dictionary<string, string> { { "type", "ProductId" }, { "url", appID }, { "ring", checkBox1.Checked ? "WIF" : "Retail" }, { "lang", System.Globalization.CultureInfo.InstalledUICulture.Name } });
-                        
-            appIdHttp.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response = await appIdHttp.PostAsync("https://store.rg-adguard.net/api/GetFiles", ucont , cancel).ConfigureAwait(false);
-            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            responseString = responseString.Replace("<head/>", "");
-            HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
-            htmlDoc.LoadHtml(responseString);
+            switch (selection)
+            {
+                case "Retail": return "retail";
+                case "Release Preview": return "RP";
+                case "Insider Flow": return "WIS";
+                case "Insider Fast": return "WIF";
+                default: return "retail";
+            }
+        }
 
-            //test dotazu na WU
-            HttpClient appIdHttp2 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
-            FormUrlEncodedContent ucont2 = new FormUrlEncodedContent(new Dictionary<string, string> { { "type", "ProductId" }, { "url", appID }, { "ring", checkBox1.Checked ? "WIF" : "Retail" }, { "lang", System.Globalization.CultureInfo.InstalledUICulture.Name } });
-            
-            HttpContent httpContent = new StringContent(File.ReadAllText("./cookie.xml"));
+        private async Task<string> GetCookie(string appID, string ring)
+        {
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+            FormUrlEncodedContent ucont = new FormUrlEncodedContent(new Dictionary<string, string> { { "type", "ProductId" }, { "url", appID }, { "ring", ring }, { "lang", System.Globalization.CultureInfo.InstalledUICulture.Name } });
+
+            HttpContent httpContent = new StringContent(Properties.Resources.cookie);
             httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml");
 
-            appIdHttp2.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response2 = await appIdHttp2.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx", httpContent, cancel).ConfigureAwait(false);
-            string responseString2 = await response2.Content.ReadAsStringAsync().ConfigureAwait(false);
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response = await httpClient.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx", httpContent, cancel).ConfigureAwait(false);
+            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             string cookie = "";
 
-            HtmlAgilityPack.HtmlDocument htmlDoc2 = new HtmlAgilityPack.HtmlDocument();
-            htmlDoc2.LoadHtml(responseString2);
-            foreach (HtmlNode node2 in htmlDoc2.DocumentNode.Descendants("EncryptedData"))
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(responseString);
+            //htmlDoc2.LoadHtml(responseString2);
+            foreach (XmlNode node in xmlDoc.GetElementsByTagName("EncryptedData"))
             {
-                cookie = node2.InnerText;
-                break;
+                return node.InnerText;
             }
-            HttpClient appIdHttp4 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
-            appIdHttp4.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response4 = await appIdHttp4.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market=CZ&locale=cs-cz&deviceFamily=Windows.Desktop");
-            string responseString4 = await response4.Content.ReadAsStringAsync().ConfigureAwait(false);
+            httpClient.Dispose();
+            return cookie;
+        }
+
+        //tady udělat locale na automaticky
+        private async Task<string> GetCategoryID(string appID)
+        {
+            HttpClient htpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+            htpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response = await htpClient.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market=CZ&locale=cs-cz&deviceFamily=Windows.Desktop");
+            string responseString4 = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             string data = "";
 
             JsonTextReader json = new JsonTextReader(new StringReader(responseString4));
@@ -107,53 +98,122 @@ namespace MS_Store_Downloader
                     if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "WuCategoryId")
                     {
                         json.Read();
-                        data = json.Value.ToString().Replace("\\", "");
-                        break;
+                        return json.Value.ToString().Replace("\\", "");
+                    }
+                }
+            }
+            return null;
+        }
+
+        private async Task<string> GetFileListXML(string categoryID, string cookie, string ring)
+        {
+            string cookie2 = Properties.Resources.wu.Replace("{1}", cookie).Replace("{2}", categoryID).Replace("{3}", ring);
+
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+
+            HttpContent httpContent = new StringContent(cookie2);
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml");
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response = await httpClient.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx", httpContent, cancel).ConfigureAwait(false);
+            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return responseString.Replace("&lt;", "<").Replace("&gt;", ">");
+        }
+
+        private async Task<List<PackageInfo>> GetPackages(string xmlList, string ring)
+        {
+            List<PackageInfo> packages = new List<PackageInfo>();
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlList);
+            Dictionary<string, string> packagesExt = new Dictionary<string, string>();
+
+            foreach (XmlNode node in xmlDoc.DocumentElement.GetElementsByTagName("File"))
+            {
+                if (node.Attributes.GetNamedItem("InstallerSpecificIdentifier") != null)
+                {
+                    string name = node.Attributes.GetNamedItem("InstallerSpecificIdentifier").Value;
+                    if (!packagesExt.ContainsKey(name))
+                    {
+                        packagesExt.Add(name, node.Attributes.GetNamedItem("FileName").Value.Remove(0, node.Attributes.GetNamedItem("FileName").Value.LastIndexOf('.')));
                     }
                 }
             }
 
-            string cookie2 = File.ReadAllText("wu.xml");
-            cookie2 = cookie2.Replace("{1}", cookie).Replace("{2}", data).Replace("{3}", checkBox1.Checked ? "WIF" : "Retail");
-            HttpClient appIdHttp3 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
-            
-            HttpContent httpContent2 = new StringContent(cookie2);
-            httpContent2.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml"); 
-            appIdHttp3.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response3 = await appIdHttp3.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx", httpContent2, cancel).ConfigureAwait(false);
-            string responseString3 = await response3.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            //tady číst response3 jako xml, hledat tagy xml, vzít jejich inner text a &gt;&lt; převést na ><.
-            //Pak to načíst jako nový xml a hledat tagy Files, InstallerSpecificIdentifier (to je jméno balíku),
-            // FileName (ukazuje appx, atd), SecuredFragment, UpdateID, RevisionNumber
-            // a pomocí url.xml s tím pracovat dál na vygenerování linku pomocí cookie3 a http5
-
-            string cookie3 = File.ReadAllText("wu.xml");
-            cookie2 = cookie3.Replace("{1}", cookie).Replace("{2}", data).Replace("{3}", checkBox1.Checked ? "WIF" : "Retail");
-            HttpClient appIdHttp5 = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true }); 
-            HttpContent httpContent3 = new StringContent(File.ReadAllText("./url.xml"));
-            httpContent3.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml");
-            appIdHttp5.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response5 = await appIdHttp5.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured", httpContent3, cancel).ConfigureAwait(false);
-            string responseString5 = await response5.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            File.WriteAllText("./msapi.txt", responseString3);
-
-            //konec testu dotazu WU
-            foreach (HtmlNode node in htmlDoc.DocumentNode.Descendants("a"))
+            foreach (XmlNode node in xmlDoc.DocumentElement.GetElementsByTagName("SecuredFragment"))
             {
-                string text = node.InnerText;
-                string link = node.GetAttributeValue("href", "");
-                if (text.ToLower().EndsWith(".appx") || text.ToLower().EndsWith(".appxbundle") || text.ToLower().EndsWith(".msixbundle") || text.ToLower().EndsWith(".msix"))
+                string name = node.ParentNode.ParentNode["ApplicabilityRules"]["Metadata"]["AppxPackageMetadata"]["AppxMetadata"].Attributes.GetNamedItem("PackageMoniker").Value;
+                packages.Add(new PackageInfo(name,
+                    packagesExt[name],
+                    await GetUri(node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
+                        node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("RevisionNumber").Value,
+                        ring).ConfigureAwait(false),
+                    node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("RevisionNumber").Value,
+                    node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
+                    node.ParentNode.ParentNode.ParentNode["ID"].InnerText));
+            }
+
+            return packages;
+        }
+
+        public async Task<string> GetUri(string updateID, string revision, string ring)
+        {
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true }); 
+            HttpContent httpContent = new StringContent(Properties.Resources.url.Replace("{1}", updateID).Replace("{2}", revision).Replace("{3}", ring));
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml");
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response = await httpClient.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured", httpContent, cancel).ConfigureAwait(false);
+            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            XmlDocument xmlUri = new XmlDocument();
+            xmlUri.LoadXml(responseString);
+
+            
+            return xmlUri.DocumentElement.GetElementsByTagName("Url")[0].InnerText;
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            string selectedRing = GetRing(comboBox1.SelectedItem.ToString());
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => pictureBox1.Visible = true));
+            else
+                pictureBox1.Visible = true;
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => listView1.Items.Clear()));
+            else
+                listView1.Items.Clear();
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => button1.Enabled = false));
+            else
+                button1.Enabled = false;
+            string appID = textBox1.Text;
+            if(appID.Contains("/"))
+                appID = appID.Remove(0, appID.LastIndexOf("/") + 1);
+            if (appID.Contains("?"))
+                appID = appID.Remove(appID.IndexOf("?"));
+            string cookie = await GetCookie(appID, selectedRing).ConfigureAwait(false);
+            string categoryID = await GetCategoryID(appID).ConfigureAwait(false);
+            List<PackageInfo> packages = await GetPackages(await GetFileListXML(categoryID, cookie, selectedRing).ConfigureAwait(false), selectedRing).ConfigureAwait(false);
+
+            //udělat comparer pro sortování podle jména
+            packages.Sort();
+
+            foreach (PackageInfo package in packages)
+            {
+                ListViewItem lvi = new ListViewItem(package.Name + package.Extension);
+                lvi.Tag = package.Uri;
+                if (!InvokeRequired)
                 {
-                    ListViewItem lvi = new ListViewItem(text);
-                    lvi.Tag = link;
-                    if (InvokeRequired)
-                        this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
-                    else
-                        listView1.Items.Add(lvi);
+                    listView1.BeginUpdate();
+                    listView1.Items.Add(lvi);
+                    listView1.EndUpdate();
+                }
+                else
+                {
+                    this.BeginInvoke(new Action(() => listView1.BeginUpdate()));
+                    this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
+                    this.BeginInvoke(new Action(() => listView1.EndUpdate()));
                 }
             }
+            
             if(InvokeRequired)
                 this.BeginInvoke(new Action(() => pictureBox1.Visible = false));
             else
