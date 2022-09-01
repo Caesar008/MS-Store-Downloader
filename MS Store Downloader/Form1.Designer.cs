@@ -37,7 +37,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(119, 12);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(588, 20);
+            this.textBox1.Size = new System.Drawing.Size(558, 20);
             this.textBox1.TabIndex = 0;
             // 
             // button1
@@ -75,7 +76,7 @@
             this.listView1.Location = new System.Drawing.Point(12, 41);
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(695, 397);
+            this.listView1.Size = new System.Drawing.Size(665, 397);
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -83,7 +84,7 @@
             // Application
             // 
             this.Application.Text = "Application";
-            this.Application.Width = 667;
+            this.Application.Width = 637;
             // 
             // label1
             // 
@@ -120,22 +121,36 @@
             // 
             this.saveFileDialog1.FileName = "Save Here";
             // 
-            // checkBox1
+            // label2
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(713, 41);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(48, 17);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "Beta";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(683, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Ring";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Retail",
+            "Release Preview",
+            "Insider Slow",
+            "Insider Fast"});
+            this.comboBox1.Location = new System.Drawing.Point(683, 57);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(105, 21);
+            this.comboBox1.TabIndex = 8;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
@@ -162,7 +177,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 
