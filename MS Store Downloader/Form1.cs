@@ -13,6 +13,10 @@ using System.Threading;
 using Microsoft.Win32;
 using System.Security;
 using HtmlAgilityPack;
+using StoreLib.Services;
+using StoreLib.Models;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.LinkLabel;
 
 namespace MS_Store_Downloader
 {
@@ -49,31 +53,25 @@ namespace MS_Store_Downloader
                 appID = appID.Remove(0, appID.LastIndexOf("/") + 1);
             if (appID.Contains("?"))
                 appID = appID.Remove(appID.IndexOf("?"));
-            HttpClient appIdHttp = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
-            FormUrlEncodedContent ucont = new FormUrlEncodedContent(new Dictionary<string, string> { { "type", "ProductId" }, { "url", appID }, { "ring", checkBox1.Checked ? "WIF" : "Retail" }, { "lang", System.Globalization.CultureInfo.InstalledUICulture.Name } });
-                        
-            appIdHttp.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response = await appIdHttp.PostAsync("https://store.rg-adguard.net/api/GetFiles", ucont , cancel).ConfigureAwait(false);
-            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            responseString = responseString.Replace("<head/>", "");
-            HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
-            htmlDoc.LoadHtml(responseString);
 
-            foreach (HtmlNode node in htmlDoc.DocumentNode.Descendants("a"))
+            DisplayCatalogHandler catalogHandler = new DisplayCatalogHandler(StoreLib.Models.DCatEndpoint.Production, new StoreLib.Services.Locale(StoreLib.Services.Market.US, StoreLib.Services.Lang.en, true));
+            
+            await catalogHandler.QueryDCATAsync(appID).ConfigureAwait(false);
+            foreach (PackageInstance download in await catalogHandler.GetPackagesForProductAsync(UpdateRing.RingString(checkBox1.Checked ? UpdateRing.Ring.InsiderFast : UpdateRing.Ring.Retail)).ConfigureAwait(false))
             {
-                string text = node.InnerText;
-                string link = node.GetAttributeValue("href", "");
-                if (text.ToLower().EndsWith(".appx") || text.ToLower().EndsWith(".appxbundle") || text.ToLower().EndsWith(".msixbundle") || text.ToLower().EndsWith(".msix"))
+                //if (download.PackageMoniker.ToLower().EndsWith(".appx") || download.PackageMoniker.ToLower().EndsWith(".appxbundle") || download.PackageMoniker.ToLower().EndsWith(".msixbundle") || download.PackageMoniker.ToLower().EndsWith(".msix"))
+                if (download.PackageFileExtension.ToLower() == ".appx" || download.PackageFileExtension.ToLower() == ".appxbundle" || download.PackageFileExtension.ToLower() == ".msix" || download.PackageFileExtension.ToLower() == ".msixbundle")
                 {
-                    ListViewItem lvi = new ListViewItem(text);
-                    lvi.Tag = link;
+                    ListViewItem lvi = new ListViewItem(download.PackageMoniker + download.PackageFileExtension);
+                    lvi.Tag = download.PackageUri.OriginalString;
                     if (InvokeRequired)
                         this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
                     else
                         listView1.Items.Add(lvi);
                 }
             }
-            if(InvokeRequired)
+
+            if (InvokeRequired)
                 this.BeginInvoke(new Action(() => pictureBox1.Visible = false));
             else
                 pictureBox1.Visible = false;

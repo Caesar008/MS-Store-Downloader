@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\Users\jarkopav\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -92,6 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\StoreLib-Public\StoreLib\StoreLib.csproj">
+      <Project>{35f3e26f-b540-4f15-8858-c9e0c4458405}</Project>
+      <Name>StoreLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
