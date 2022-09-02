@@ -14,8 +14,9 @@ namespace MS_Store_Downloader
         internal string RevisionNumber;
         internal string UpdateID;
         internal string ID;
+        internal double Size;
 
-        public PackageInfo(string name, string extension, string uri, string revisionNumber, string updateID, string id)
+        public PackageInfo(string name, string extension, string uri, string revisionNumber, string updateID, string id, double size)
         {
             Name = name;
             Extension = extension;
@@ -23,6 +24,7 @@ namespace MS_Store_Downloader
             RevisionNumber = revisionNumber;
             UpdateID = updateID;
             ID = id;
+            this.Size = size;
         }
 
         public int CompareTo(PackageInfo other)

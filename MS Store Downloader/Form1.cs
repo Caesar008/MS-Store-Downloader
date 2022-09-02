@@ -22,12 +22,12 @@ namespace MS_Store_Downloader
         CancellationToken cancel = new CancellationToken();
         public Form1()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             if (!WBEmulator.IsBrowserEmulationSet(this))
             {
                 WBEmulator.SetBrowserEmulationVersion(this);
             }
-            pictureBox1.Location = new Point(this.Width/2 - 64, this.Height/2 - 64);
+            pictureBox1.Location = new Point(this.Width / 2 - 64, this.Height / 2 - 64);
             button2.Enabled = false;
             comboBox1.SelectedIndex = 0;
         }
@@ -72,7 +72,7 @@ namespace MS_Store_Downloader
         {
             HttpClient htpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
             htpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response = await htpClient.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market="+ System.Globalization.CultureInfo.InstalledUICulture.Name.Remove(0,3).ToUpper() + "&locale="+ System.Globalization.CultureInfo.InstalledUICulture.Name.ToLower() + "&deviceFamily=Windows.Desktop");
+            var response = await htpClient.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market=" + System.Globalization.CultureInfo.InstalledUICulture.Name.Remove(0, 3).ToUpper() + "&locale=" + System.Globalization.CultureInfo.InstalledUICulture.Name.ToLower() + "&deviceFamily=Windows.Desktop");
             string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             string data = "";
 
@@ -135,22 +135,27 @@ namespace MS_Store_Downloader
                     string name = node.Attributes.GetNamedItem("InstallerSpecificIdentifier").Value;
                     if (!packagesExt.ContainsKey(name))
                     {
-                        packagesExt.Add(name, node.Attributes.GetNamedItem("FileName").Value.Remove(0, node.Attributes.GetNamedItem("FileName").Value.LastIndexOf('.')));
+                        packagesExt.Add(name, node.Attributes.GetNamedItem("FileName").Value.Remove(0, node.Attributes.GetNamedItem("FileName").Value.LastIndexOf('.')) + "|" + node.Attributes.GetNamedItem("Size").Value);
                     }
                 }
             }
 
             foreach (XmlNode node in xmlDoc.DocumentElement.GetElementsByTagName("SecuredFragment"))
             {
-                string name = node.ParentNode.ParentNode["ApplicabilityRules"]["Metadata"]["AppxPackageMetadata"]["AppxMetadata"].Attributes.GetNamedItem("PackageMoniker").Value;
-                packages.Add(new PackageInfo(name,
-                    packagesExt[name],
-                    await GetUri(node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
+                string name = "";
+                if (node.ParentNode.ParentNode["ApplicabilityRules"]["Metadata"]["AppxPackageMetadata"]["AppxMetadata"].Attributes.GetNamedItem("PackageMoniker") != null)
+                {
+                    name = node.ParentNode.ParentNode["ApplicabilityRules"]["Metadata"]["AppxPackageMetadata"]["AppxMetadata"].Attributes.GetNamedItem("PackageMoniker").Value;
+                    packages.Add(new PackageInfo(name,
+                        packagesExt[name].Split('|')[0],
+                        await GetUri(node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
+                            node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("RevisionNumber").Value,
+                            ring).ConfigureAwait(false),
                         node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("RevisionNumber").Value,
-                        ring).ConfigureAwait(false),
-                    node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("RevisionNumber").Value,
-                    node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
-                    node.ParentNode.ParentNode.ParentNode["ID"].InnerText));
+                        node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
+                        node.ParentNode.ParentNode.ParentNode["ID"].InnerText,
+                        long.Parse(packagesExt[name].Split('|')[1])));
+                }
             }
 
             return packages;
@@ -158,7 +163,7 @@ namespace MS_Store_Downloader
 
         public async Task<string> GetUri(string updateID, string revision, string ring)
         {
-            HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true }); 
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
             HttpContent httpContent = new StringContent(Properties.Resources.url.Replace("{1}", updateID).Replace("{2}", revision).Replace("{3}", ring));
             httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/soap+xml");
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
@@ -188,7 +193,7 @@ namespace MS_Store_Downloader
             else
                 button1.Enabled = false;
             string appID = textBox1.Text;
-            if(appID.Contains("/"))
+            if (appID.Contains("/"))
                 appID = appID.Remove(0, appID.LastIndexOf("/") + 1);
             if (appID.Contains("?"))
                 appID = appID.Remove(appID.IndexOf("?"));
@@ -203,7 +208,7 @@ namespace MS_Store_Downloader
             {
                 if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle")
                 {
-                    ListViewItem lvi = new ListViewItem(package.Name + package.Extension);
+                    ListViewItem lvi = new ListViewItem(new string[] { package.Name + package.Extension, ConvertSize(package.Size) });
                     lvi.Tag = package.Uri;
                     if (!InvokeRequired)
                     {
@@ -219,8 +224,8 @@ namespace MS_Store_Downloader
                     }
                 }
             }
-            
-            if(InvokeRequired)
+
+            if (InvokeRequired)
                 this.BeginInvoke(new Action(() => pictureBox1.Visible = false));
             else
                 pictureBox1.Visible = false;
@@ -233,6 +238,19 @@ namespace MS_Store_Downloader
                 this.BeginInvoke(new Action(() => button1.Enabled = true));
             else
                 button1.Enabled = true;
+        }
+
+        private string ConvertSize(double size)
+        {
+            List<string> jednotky = new List<string> { "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+            int nasobek = 0;
+            while(size >= 1024)
+            {
+                size /= 1024;
+                nasobek++;
+            }
+            return Math.Round(size, 2, MidpointRounding.AwayFromZero).ToString() + " " + jednotky[nasobek];
         }
 
         private void Form1_Resize(object sender, EventArgs e)
