@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MS_Store_Downloader
 {
-    internal class PackageInfo
+    internal class PackageInfo : IComparable<PackageInfo>
     {
         internal string Name;
         internal string Extension;
@@ -23,6 +23,11 @@ namespace MS_Store_Downloader
             RevisionNumber = revisionNumber;
             UpdateID = updateID;
             ID = id;
+        }
+
+        public int CompareTo(PackageInfo other)
+        {
+            return this.Name.CompareTo(other.Name);
         }
     }
 }

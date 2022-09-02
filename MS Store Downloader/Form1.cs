@@ -68,16 +68,17 @@ namespace MS_Store_Downloader
             return cookie;
         }
 
-        //tady udělat locale na automaticky
         private async Task<string> GetCategoryID(string appID)
         {
             HttpClient htpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
             htpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
-            var response = await htpClient.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market=CZ&locale=cs-cz&deviceFamily=Windows.Desktop");
-            string responseString4 = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var response = await htpClient.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market="+ System.Globalization.CultureInfo.InstalledUICulture.Name.Remove(0,3).ToUpper() + "&locale="+ System.Globalization.CultureInfo.InstalledUICulture.Name.ToLower() + "&deviceFamily=Windows.Desktop");
+            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             string data = "";
 
-            JsonTextReader json = new JsonTextReader(new StringReader(responseString4));
+            htpClient.Dispose();
+
+            JsonTextReader json = new JsonTextReader(new StringReader(responseString));
             while (json.Read())
             {
                 if (json.Value != null)
@@ -116,6 +117,7 @@ namespace MS_Store_Downloader
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
             var response = await httpClient.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx", httpContent, cancel).ConfigureAwait(false);
             string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            httpClient.Dispose();
             return responseString.Replace("&lt;", "<").Replace("&gt;", ">");
         }
 
@@ -165,7 +167,8 @@ namespace MS_Store_Downloader
             XmlDocument xmlUri = new XmlDocument();
             xmlUri.LoadXml(responseString);
 
-            
+            httpClient.Dispose();
+
             return xmlUri.DocumentElement.GetElementsByTagName("Url")[0].InnerText;
         }
 
@@ -198,19 +201,22 @@ namespace MS_Store_Downloader
 
             foreach (PackageInfo package in packages)
             {
-                ListViewItem lvi = new ListViewItem(package.Name + package.Extension);
-                lvi.Tag = package.Uri;
-                if (!InvokeRequired)
+                if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle")
                 {
-                    listView1.BeginUpdate();
-                    listView1.Items.Add(lvi);
-                    listView1.EndUpdate();
-                }
-                else
-                {
-                    this.BeginInvoke(new Action(() => listView1.BeginUpdate()));
-                    this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
-                    this.BeginInvoke(new Action(() => listView1.EndUpdate()));
+                    ListViewItem lvi = new ListViewItem(package.Name + package.Extension);
+                    lvi.Tag = package.Uri;
+                    if (!InvokeRequired)
+                    {
+                        listView1.BeginUpdate();
+                        listView1.Items.Add(lvi);
+                        listView1.EndUpdate();
+                    }
+                    else
+                    {
+                        this.BeginInvoke(new Action(() => listView1.BeginUpdate()));
+                        this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
+                        this.BeginInvoke(new Action(() => listView1.EndUpdate()));
+                    }
                 }
             }
             
