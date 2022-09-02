@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 
 namespace MS_Store_Downloader
 {
+    //ms store ID 9wzdncrfjbmp
     public partial class Form1 : Form
     {
         CancellationToken cancel = new CancellationToken();
