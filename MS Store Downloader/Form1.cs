@@ -320,7 +320,6 @@ namespace MS_Store_Downloader
             else
                 button2.Enabled = true;
         }
-        
     }
 
     public enum BrowserEmulationVersion
