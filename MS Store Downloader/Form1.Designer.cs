@@ -116,9 +116,8 @@
             // 
             // button2
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(683, 204);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(683, 84);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(105, 55);
             this.button2.TabIndex = 5;
@@ -157,11 +156,12 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.richTextBox1.Location = new System.Drawing.Point(683, 265);
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Location = new System.Drawing.Point(683, 145);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(105, 173);
+            this.richTextBox1.Size = new System.Drawing.Size(105, 293);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "MS Store\n9WZDNCRFJBMP\n\nnVidia Panel\n9NF8H0H7WMLT";
             // 
@@ -180,6 +180,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "Form1";
             this.Text = "MS Store Downloader";
             this.Resize += new System.EventHandler(this.Form1_Resize);

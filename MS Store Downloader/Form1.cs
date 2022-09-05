@@ -304,7 +304,7 @@ namespace MS_Store_Downloader
         private void Form1_Resize(object sender, EventArgs e)
         {
             pictureBox1.Location = new Point(this.Width/2 - 64, this.Height/2 - 64);
-            listView1.Columns[0].Width = listView1.Width - 27;
+            listView1.Columns[0].Width = listView1.Width - 127;
         }
 
         private async void button2_Click(object sender, EventArgs e)
