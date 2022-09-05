@@ -104,6 +104,7 @@ namespace MS_Store_Downloader
                     }
                 }
             }
+
             return null;
         }
 
@@ -120,6 +121,41 @@ namespace MS_Store_Downloader
             string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             httpClient.Dispose();
             return responseString.Replace("&lt;", "<").Replace("&gt;", ">");
+        }
+
+        private async Task<List<PackageInfo>> GetNonAppxPackage(string appID)
+        {
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response = await httpClient.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/" + appID).ConfigureAwait(false);
+            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            httpClient.Dispose();
+
+            List<string> urls = new List<string>();
+            List<PackageInfo> packages = new List<PackageInfo>();
+
+            JsonTextReader json = new JsonTextReader(new StringReader(responseString));
+
+            PackageInfo pi = new PackageInfo("", "", "", "", "", appID, -1);
+
+            while (json.Read())
+            {
+                if (json.Value != null)
+                {
+                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "InstallerUrl")
+                    {
+                        json.Read();
+                        if (!urls.Contains(json.Value.ToString()))
+                            urls.Add(json.Value.ToString());
+                    }
+                }
+            }
+            foreach(string s in urls)
+            {
+                packages.Add(new PackageInfo(s.Remove(s.LastIndexOf('.')).Remove(0, s.LastIndexOf('/') + 1), s.Remove(0, s.LastIndexOf('.')), s, "", "", appID, -1));
+            }
+
+            return packages;
         }
 
         private async Task<List<PackageInfo>> GetPackages(string xmlList, string ring)
@@ -202,12 +238,18 @@ namespace MS_Store_Downloader
             string categoryID = await GetCategoryID(appID).ConfigureAwait(false);
             List<PackageInfo> packages = await GetPackages(await GetFileListXML(categoryID, cookie, selectedRing).ConfigureAwait(false), selectedRing).ConfigureAwait(false);
 
+            if(packages.Count == 0)
+            {
+                //pokud není WuCategoryID
+                packages = await GetNonAppxPackage(appID);
+            }
+
             //udělat comparer pro sortování podle jména
             packages.Sort();
 
             foreach (PackageInfo package in packages)
             {
-                if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle")
+                if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle" || package.Extension.ToLower() == ".exe" || package.Extension.ToLower() == ".msi")
                 {
                     ListViewItem lvi = new ListViewItem(new string[] { package.Name + package.Extension, ConvertSize(package.Size) });
                     lvi.Tag = package.Uri;
@@ -243,15 +285,20 @@ namespace MS_Store_Downloader
 
         private string ConvertSize(double size)
         {
-            List<string> jednotky = new List<string> { "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-
-            int nasobek = 0;
-            while(size >= 1024)
+            if (size >= 0)
             {
-                size /= 1024;
-                nasobek++;
+                List<string> jednotky = new List<string> { "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+                int nasobek = 0;
+                while (size >= 1024)
+                {
+                    size /= 1024;
+                    nasobek++;
+                }
+                return Math.Round(size, 2, MidpointRounding.AwayFromZero).ToString() + " " + jednotky[nasobek];
             }
-            return Math.Round(size, 2, MidpointRounding.AwayFromZero).ToString() + " " + jednotky[nasobek];
+            else
+                return "unknown";
         }
 
         private void Form1_Resize(object sender, EventArgs e)
