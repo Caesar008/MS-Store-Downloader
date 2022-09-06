@@ -298,7 +298,7 @@ namespace MS_Store_Downloader
                 button1.Enabled = true;
 
             if (service)
-                MessageBox.Show("There was problem with communicationg with MS servers. Some packages may be missing in result. Try to search again later", "Communication problem", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("There was problem with communication with MS servers. Some packages may be missing in result. Try to search again later", "Communication problem", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private string ConvertSize(double size)
