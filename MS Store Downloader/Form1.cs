@@ -31,6 +31,7 @@ namespace MS_Store_Downloader
             pictureBox1.Location = new Point(this.Width / 2 - 64, this.Height / 2 - 64);
             button2.Enabled = false;
             comboBox1.SelectedIndex = 0;
+            panel1.Visible = false;
         }
 
         private string GetRing(string selection)
@@ -207,11 +208,19 @@ namespace MS_Store_Downloader
             var response = await httpClient.PostAsync("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured", httpContent, cancel).ConfigureAwait(false);
             string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             XmlDocument xmlUri = new XmlDocument();
-            xmlUri.LoadXml(responseString);
 
-            httpClient.Dispose();
+            if(response.StatusCode == HttpStatusCode.OK)
+            { 
+                xmlUri.LoadXml(responseString);
 
-            return xmlUri.DocumentElement.GetElementsByTagName("Url")[0].InnerText;
+                httpClient.Dispose();
+
+                return xmlUri.DocumentElement.GetElementsByTagName("Url")[0].InnerText;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -246,25 +255,31 @@ namespace MS_Store_Downloader
 
             //udělat comparer pro sortování podle jména
             packages.Sort();
+            bool service = false;
 
             foreach (PackageInfo package in packages)
             {
                 if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle" || package.Extension.ToLower() == ".exe" || package.Extension.ToLower() == ".msi")
                 {
-                    ListViewItem lvi = new ListViewItem(new string[] { package.Name + package.Extension, ConvertSize(package.Size) });
-                    lvi.Tag = package.Uri;
-                    if (!InvokeRequired)
+                    if (package.Uri != null)
                     {
-                        listView1.BeginUpdate();
-                        listView1.Items.Add(lvi);
-                        listView1.EndUpdate();
+                        ListViewItem lvi = new ListViewItem(new string[] { package.Name + package.Extension, ConvertSize(package.Size) });
+                        lvi.Tag = package.Uri;
+                        if (!InvokeRequired)
+                        {
+                            listView1.BeginUpdate();
+                            listView1.Items.Add(lvi);
+                            listView1.EndUpdate();
+                        }
+                        else
+                        {
+                            this.BeginInvoke(new Action(() => listView1.BeginUpdate()));
+                            this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
+                            this.BeginInvoke(new Action(() => listView1.EndUpdate()));
+                        }
                     }
                     else
-                    {
-                        this.BeginInvoke(new Action(() => listView1.BeginUpdate()));
-                        this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
-                        this.BeginInvoke(new Action(() => listView1.EndUpdate()));
-                    }
+                        service = true;
                 }
             }
 
@@ -281,6 +296,9 @@ namespace MS_Store_Downloader
                 this.BeginInvoke(new Action(() => button1.Enabled = true));
             else
                 button1.Enabled = true;
+
+            if (service)
+                MessageBox.Show("There was problem with communicationg with MS servers. Some packages may be missing in result. Try to search again later", "Communication problem", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private string ConvertSize(double size)
@@ -366,6 +384,27 @@ namespace MS_Store_Downloader
                 this.BeginInvoke(new Action(() => button2.Enabled = true));
             else
                 button2.Enabled = true;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //hledání appek na https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch
+            //https://github.com/ThomasPe/MS-Store-API/blob/master/endpoints/v9.0/manifestSearch.md
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
