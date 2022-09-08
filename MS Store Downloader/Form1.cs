@@ -14,6 +14,10 @@ using Microsoft.Win32;
 using System.Security;
 using System.Xml;
 using Newtonsoft.Json;
+using System.Net.NetworkInformation;
+using System.Runtime.Remoting.Contexts;
+using static System.Net.Mime.MediaTypeNames;
+using System.Security.Policy;
 
 namespace MS_Store_Downloader
 {
@@ -32,6 +36,7 @@ namespace MS_Store_Downloader
             button2.Enabled = false;
             comboBox1.SelectedIndex = 0;
             panel1.Visible = false;
+            button5.Enabled = false;
         }
 
         private string GetRing(string selection)
@@ -132,8 +137,12 @@ namespace MS_Store_Downloader
             string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             httpClient.Dispose();
 
-            List<string> urls = new List<string>();
+            string url = "";
+            string type = "";
+            string packageName = "";
+
             List<PackageInfo> packages = new List<PackageInfo>();
+
 
             JsonTextReader json = new JsonTextReader(new StringReader(responseString));
 
@@ -146,14 +155,47 @@ namespace MS_Store_Downloader
                     if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "InstallerUrl")
                     {
                         json.Read();
-                        if (!urls.Contains(json.Value.ToString()))
-                            urls.Add(json.Value.ToString());
+                        if (url == "")
+                        {
+                            url = json.Value.ToString();
+                            if (type != "")
+                                break;
+                        }
+                    }
+                    //InstallerType
+                    else if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "InstallerType")
+                    {
+                        json.Read();
+                        type = json.Value.ToString();
+                        if (url != "")
+                            break;
                     }
                 }
             }
-            foreach(string s in urls)
+            json = new JsonTextReader(new StringReader(responseString));
+            while (json.Read())
             {
-                packages.Add(new PackageInfo(s.Remove(s.LastIndexOf('.')).Remove(0, s.LastIndexOf('/') + 1), s.Remove(0, s.LastIndexOf('.')), s, "", "", appID, -1));
+                if (json.Value != null)
+                {
+                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "PackageName")
+                    {
+                        json.Read();
+                        if (packageName == "")
+                        {
+                            packageName = json.Value.ToString();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (type == "" || url.ToLower().EndsWith(".exe") || url.ToLower().EndsWith(".msi"))
+            {
+                packages.Add(new PackageInfo(url.Remove(url.LastIndexOf('.')).Remove(0, url.LastIndexOf('/') + 1), url.Remove(0, url.LastIndexOf('.')), url, "", "", appID, -1));
+            }
+            else
+            {
+                packages.Add(new PackageInfo(packageName, "." + type, url, "", "", appID, -1));
             }
 
             return packages;
@@ -219,6 +261,7 @@ namespace MS_Store_Downloader
             }
             else
             {
+                httpClient.Dispose();
                 return null;
             }
         }
@@ -321,8 +364,10 @@ namespace MS_Store_Downloader
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            pictureBox1.Location = new Point(this.Width/2 - 64, this.Height/2 - 64);
-            listView1.Columns[0].Width = listView1.Width - 127;
+            /*pictureBox1.Location = new Point(this.Width/2 - 64, this.Height/2 - 64);
+            listView1.Columns[0].Width = listView1.Width - 128;
+            listView2.Columns[1].Width = ((listView2.Width - 137) / 2) - 28 + 50;
+            listView2.Columns[2].Width = ((listView2.Width - 137) / 2) - 28;*/
         }
 
         private async void button2_Click(object sender, EventArgs e)
@@ -391,10 +436,90 @@ namespace MS_Store_Downloader
             panel1.Visible = true;
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => pictureBox1.Visible = true));
+            else
+                pictureBox1.Visible = true; 
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => button4.Enabled = false));
+            else
+                button4.Enabled = false;
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => button6.Enabled = false));
+            else
+                button6.Enabled = false;
+
             //hledání appek na https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch
             //https://github.com/ThomasPe/MS-Store-API/blob/master/endpoints/v9.0/manifestSearch.md
+            //vytvoření JSON query
+            string jsonText = "{\"Query\": {\"KeyWord\": \"" + textBox2.Text + "\",\"MatchType\": \"Substring\"}}";
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
+            HttpContent httpContent = new StringContent(jsonText);
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("text/json");
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
+            var response = await httpClient.PostAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch", httpContent, cancel).ConfigureAwait(false);
+            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            httpClient.Dispose();
+
+            JsonTextReader json = new JsonTextReader(new StringReader(responseString));
+            List<string[]> results = new List<string[]>();
+
+            string packageID = "", packageName = "", publisher = "";
+
+            while (json.Read())
+            {
+                if (json.Value != null)
+                {
+                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "PackageIdentifier")
+                    {
+                        json.Read();
+                        packageID = json.Value.ToString();
+                    }
+                    else if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "PackageName")
+                    {
+                        json.Read();
+                        packageName = json.Value.ToString();
+                    }
+                    else if(json.TokenType == JsonToken.PropertyName && (string)json.Value == "Publisher")
+                    {
+                        json.Read();
+                        publisher = json.Value.ToString();
+                    }
+
+                    if (packageID != "" && packageName != "" && publisher != "")
+                    {
+                        results.Add(new string[] { packageID, packageName, publisher });
+                        packageID = packageName = publisher = "";
+                    }
+                }
+            }
+            if (!InvokeRequired)
+                listView2.Items.Clear();
+            else
+                BeginInvoke(new Action(() => listView2.Items.Clear()));
+            foreach (string[] s in results)
+            {
+                ListViewItem lvi = new ListViewItem(s);
+                if (!InvokeRequired)
+                    listView2.Items.Add(lvi);
+                else
+                    BeginInvoke(new Action(() => listView2.Items.Add(lvi)));
+            }
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => pictureBox1.Visible = false));
+            else
+                pictureBox1.Visible = false;
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => button4.Enabled = true));
+            else
+                button4.Enabled = true;
+            if (InvokeRequired)
+                this.BeginInvoke(new Action(() => button6.Enabled = true));
+            else
+                button6.Enabled = true;
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -404,7 +529,16 @@ namespace MS_Store_Downloader
 
         private void button5_Click(object sender, EventArgs e)
         {
+            textBox1.Text = listView2.SelectedItems[0].Text;
+            panel1.Visible = false;
+        }
 
+        private void listView2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listView2.SelectedIndices.Count != 0)
+                button5.Enabled = true;
+            else
+                button5.Enabled=false;
         }
     }
 
