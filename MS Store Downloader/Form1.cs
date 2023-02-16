@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http;
@@ -14,10 +11,6 @@ using Microsoft.Win32;
 using System.Security;
 using System.Xml;
 using Newtonsoft.Json;
-using System.Net.NetworkInformation;
-using System.Runtime.Remoting.Contexts;
-using static System.Net.Mime.MediaTypeNames;
-using System.Security.Policy;
 
 namespace MS_Store_Downloader
 {
@@ -85,28 +78,31 @@ namespace MS_Store_Downloader
 
             htpClient.Dispose();
 
-            JsonTextReader json = new JsonTextReader(new StringReader(responseString));
-            while (json.Read())
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                if (json.Value != null)
+                JsonTextReader json = new JsonTextReader(new StringReader(responseString));
+                while (json.Read())
                 {
-                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "FulfillmentData")
+                    if (json.Value != null)
                     {
-                        json.Read();
-                        data = json.Value.ToString().Replace("\\", "");
-                        break;
+                        if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "FulfillmentData")
+                        {
+                            json.Read();
+                            data = json.Value.ToString().Replace("\\", "");
+                            break;
+                        }
                     }
                 }
-            }
-            json = new JsonTextReader(new StringReader(data));
-            while (json.Read())
-            {
-                if (json.Value != null)
+                json = new JsonTextReader(new StringReader(data));
+                while (json.Read())
                 {
-                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "WuCategoryId")
+                    if (json.Value != null)
                     {
-                        json.Read();
-                        return json.Value.ToString().Replace("\\", "");
+                        if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "WuCategoryId")
+                        {
+                            json.Read();
+                            return json.Value.ToString().Replace("\\", "");
+                        }
                     }
                 }
             }

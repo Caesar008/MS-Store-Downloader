@@ -175,7 +175,7 @@
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(105, 242);
             this.richTextBox1.TabIndex = 9;
-            this.richTextBox1.Text = "MS Store\n9WZDNCRFJBMP\n\nnVidia Panel\n9NF8H0H7WMLT";
+            this.richTextBox1.Text = "MS Store\n9WZDNCRFJBMP\n\nnVidia Panel\n9NF8H0H7WMLT\n\nHEVC Video Extension\n9N4WGH0Z6VHQ";
             // 
             // button3
             // 
