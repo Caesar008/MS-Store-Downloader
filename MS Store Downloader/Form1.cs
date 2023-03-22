@@ -74,37 +74,16 @@ namespace MS_Store_Downloader
             htpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.62");
             var response = await htpClient.GetAsync("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/" + appID + "?market=" + System.Globalization.CultureInfo.InstalledUICulture.Name.Remove(0, 3).ToUpper() + "&locale=" + System.Globalization.CultureInfo.InstalledUICulture.Name.ToLower() + "&deviceFamily=Windows.Desktop");
             string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            string data = "";
 
             htpClient.Dispose();
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                JsonTextReader json = new JsonTextReader(new StringReader(responseString));
-                while (json.Read())
-                {
-                    if (json.Value != null)
-                    {
-                        if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "FulfillmentData")
-                        {
-                            json.Read();
-                            data = json.Value.ToString().Replace("\\", "");
-                            break;
-                        }
-                    }
-                }
-                json = new JsonTextReader(new StringReader(data));
-                while (json.Read())
-                {
-                    if (json.Value != null)
-                    {
-                        if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "WuCategoryId")
-                        {
-                            json.Read();
-                            return json.Value.ToString().Replace("\\", "");
-                        }
-                    }
-                }
+                CategoryIDData categoryData = JsonConvert.DeserializeObject<CategoryIDData>(responseString);
+                FulfillmentData fulfillmentData = null;
+                if (categoryData.Payload.Skus.Count > 0)
+                    fulfillmentData = JsonConvert.DeserializeObject<FulfillmentData>(categoryData.Payload.Skus[0].FulfillmentData);
+                return fulfillmentData?.WuCategoryId;
             }
 
             return null;
@@ -142,7 +121,7 @@ namespace MS_Store_Downloader
 
             JsonTextReader json = new JsonTextReader(new StringReader(responseString));
 
-            PackageInfo pi = new PackageInfo("", "", "", "", "", appID, -1);
+            PackageInfo pi = new PackageInfo("", "", "", "", "", appID, -1, "");
 
             while (json.Read())
             {
@@ -187,11 +166,11 @@ namespace MS_Store_Downloader
 
             if (type == "" || url.ToLower().EndsWith(".exe") || url.ToLower().EndsWith(".msi"))
             {
-                packages.Add(new PackageInfo(url.Remove(url.LastIndexOf('.')).Remove(0, url.LastIndexOf('/') + 1), url.Remove(0, url.LastIndexOf('.')), url, "", "", appID, -1));
+                packages.Add(new PackageInfo(url.Remove(url.LastIndexOf('.')).Remove(0, url.LastIndexOf('/') + 1), url.Remove(0, url.LastIndexOf('.')), url, "", "", appID, -1, ""));
             }
             else
             {
-                packages.Add(new PackageInfo(packageName, "." + type, url, "", "", appID, -1));
+                packages.Add(new PackageInfo(packageName, "." + type, url, "", "", appID, -1, ""));
             }
 
             return packages;
@@ -209,9 +188,10 @@ namespace MS_Store_Downloader
                 if (node.Attributes.GetNamedItem("InstallerSpecificIdentifier") != null)
                 {
                     string name = node.Attributes.GetNamedItem("InstallerSpecificIdentifier").Value;
+                    string digest = node.Attributes.GetNamedItem("Digest").Value;
                     if (!packagesExt.ContainsKey(name))
                     {
-                        packagesExt.Add(name, node.Attributes.GetNamedItem("FileName").Value.Remove(0, node.Attributes.GetNamedItem("FileName").Value.LastIndexOf('.')) + "|" + node.Attributes.GetNamedItem("Size").Value);
+                        packagesExt.Add(name, node.Attributes.GetNamedItem("FileName").Value.Remove(0, node.Attributes.GetNamedItem("FileName").Value.LastIndexOf('.')) + "|" + node.Attributes.GetNamedItem("Size").Value + "|" + digest);
                     }
                 }
             }
@@ -226,18 +206,19 @@ namespace MS_Store_Downloader
                         packagesExt[name].Split('|')[0],
                         await GetUri(node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
                             node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("RevisionNumber").Value,
-                            ring).ConfigureAwait(false),
+                            ring, packagesExt[name].Split('|')[2]).ConfigureAwait(false),
                         node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("RevisionNumber").Value,
                         node.ParentNode.ParentNode["UpdateIdentity"].Attributes.GetNamedItem("UpdateID").Value,
                         node.ParentNode.ParentNode.ParentNode["ID"].InnerText,
-                        long.Parse(packagesExt[name].Split('|')[1])));
+                        long.Parse(packagesExt[name].Split('|')[1]),
+                        packagesExt[name].Split('|')[2]));
                 }
             }
 
             return packages;
         }
 
-        public async Task<string> GetUri(string updateID, string revision, string ring)
+        public async Task<string> GetUri(string updateID, string revision, string ring, string digets)
         {
             HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
             HttpContent httpContent = new StringContent(Properties.Resources.url.Replace("{1}", updateID).Replace("{2}", revision).Replace("{3}", ring));
@@ -253,7 +234,13 @@ namespace MS_Store_Downloader
 
                 httpClient.Dispose();
 
-                return xmlUri.DocumentElement.GetElementsByTagName("Url")[0].InnerText;
+                foreach (XmlNode node in xmlUri.DocumentElement.GetElementsByTagName("FileLocation"))
+                {
+                    if (node["FileDigest"].InnerText == digets)
+                        return node["Url"].InnerText;
+                }
+
+                return null;
             }
             else
             {

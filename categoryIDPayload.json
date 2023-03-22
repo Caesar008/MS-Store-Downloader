@@ -1,0 +1,850 @@
+{
+  "Payload": {
+    "ApproximateSizeInBytes": 5832062,
+    "HasFreeTrial": true,
+    "Images": [
+      {
+        "Url": "http://store-images.s-microsoft.com/image/apps.407.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.1d1574af-0411-46d9-b09b-b61bad09cc00",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 50,
+        "ImageType": "logo",
+        "Height": 50,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.1922.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.bf5917b4-6777-4573-b257-23219afcbe1f",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 75,
+        "ImageType": "logo",
+        "Height": 75,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.53374.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.bf3574e0-9427-4dfb-acd3-b3329d9c6674",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 100,
+        "ImageType": "logo",
+        "Height": 100,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.63935.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.a4dc150d-2223-42f9-b2c7-b1dc5be90b12",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 150,
+        "ImageType": "tile",
+        "Height": 150,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.30694.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.8b01e73c-3228-45e7-9f12-a26280119491",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 300,
+        "ImageType": "tile",
+        "Height": 300,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.14487.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.da903206-848c-4db6-90aa-133efaa0d542",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 44,
+        "ImageType": "tile",
+        "Height": 44,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.63223.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.cb9da391-53fd-4da6-9f5b-734c59bf317c",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 88,
+        "ImageType": "tile",
+        "Height": 88,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.4184.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.e69ec464-d876-4f39-966a-ee43d59b819d",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 71,
+        "ImageType": "tile",
+        "Height": 71,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.42097.9007199266489612.886ec4af-2dfc-4c28-94aa-a970fe2b05be.550ccfdc-2de9-49c0-8c4a-13b097ea7cc7",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 142,
+        "ImageType": "tile",
+        "Height": 142,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.microsoft.com/image/apps.25521.9007199266489612.26356d4c-34f5-4de1-851f-9f3e58013782.af777a48-f5ce-4b7c-8093-e353bf43bf8b",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 300,
+        "ImageType": "logo",
+        "Height": 300,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.microsoft.com/image/apps.64695.9007199266489612.0c7611ba-f966-4d36-88cc-7494384293af.0691d59d-dbf8-4b88-9069-ac0b3099e550",
+        "ImagePositionInfo": "",
+        "Caption": "",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 358,
+        "ImageType": "hero",
+        "Height": 358,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.22977.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.9a4266ab-ab53-4029-91b4-10802070229e",
+        "ImagePositionInfo": "Mobile/0",
+        "Caption": "About Screen",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.35891.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.2658a6be-1bad-4f41-87d9-c659ccd32d5c",
+        "ImagePositionInfo": "Mobile/1",
+        "Caption": "Main AnyConnect dialog",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.30509.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.bd7180e1-99d4-45ff-8ffd-499fbc616366",
+        "ImagePositionInfo": "Mobile/2",
+        "Caption": "Diagnostics",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.353.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.e6b21d76-712a-403d-92b2-d4a622a613d5",
+        "ImagePositionInfo": "Mobile/3",
+        "Caption": "Email Logs",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.49104.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.dd88f5cc-a382-4b1b-8d67-b7b7ed1b9f11",
+        "ImagePositionInfo": "Mobile/4",
+        "Caption": "VPN Settings",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.49959.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.433cd83d-1157-4b96-908f-a2e51025e476",
+        "ImagePositionInfo": "Mobile/5",
+        "Caption": "Connection Properties",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.19895.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.4cb7bbf7-8f34-4902-9f0a-d50d56d399ce",
+        "ImagePositionInfo": "Mobile/6",
+        "Caption": "Status - Connected",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.39252.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.79dfc67d-d755-4dda-8ac2-8d5778e0ddc2",
+        "ImagePositionInfo": "Mobile/7",
+        "Caption": "Edit VPN Connection",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 1280,
+        "ImageType": "screenshot",
+        "Height": 720,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.13704.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.5c145e01-6b95-4c83-8502-e4ac39bd87a8",
+        "ImagePositionInfo": "Mobile/8",
+        "Caption": "Status",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "Url": "http://store-images.s-microsoft.com/image/apps.52843.9007199266489612.98d51679-9370-49a0-80fe-0e7c425c6d48.623c040e-20c7-49d0-a367-fbab87fc3352",
+        "ImagePositionInfo": "Mobile/9",
+        "Caption": "Group selection",
+        "BackgroundColor": "transparent",
+        "ForegroundColor": "",
+        "Width": 720,
+        "ImageType": "screenshot",
+        "Height": 1280,
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ImageItem, Microsoft.Marketplace.Storefront.Contracts"
+      }],
+    "Subtitle": "Cisco Systems",
+    "ActionOverrides": [
+      {
+        "ActionType": "share",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverride, Microsoft.Marketplace.Storefront.Contracts",
+        "Cases": [
+          {
+            "Visibility": false,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverrideCase, Microsoft.Marketplace.Storefront.Contracts",
+            "Conditions": {
+              "Platform": {
+                "PlatformName": "Windows.Xbox",
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PlatformCondition, Microsoft.Marketplace.Storefront.Contracts"
+              },
+              "ClassicAppKeys": [],
+              "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverrideConditions, Microsoft.Marketplace.Storefront.Contracts"
+            }
+          },{
+            "Visibility": false,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverrideCase, Microsoft.Marketplace.Storefront.Contracts",
+            "Conditions": {
+              "Platform": {
+                "PlatformName": "Windows.Holographic",
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PlatformCondition, Microsoft.Marketplace.Storefront.Contracts"
+              },
+              "ClassicAppKeys": [],
+              "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverrideConditions, Microsoft.Marketplace.Storefront.Contracts"
+            }
+          },{
+            "Uri": "https://www.microsoft.com/store/productId/{productId}",
+            "Visibility": true,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverrideCase, Microsoft.Marketplace.Storefront.Contracts"
+          }]
+      },{
+        "ActionType": "InstallOnDevices",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverride, Microsoft.Marketplace.Storefront.Contracts",
+        "Cases": [
+          {
+            "Visibility": false,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverrideCase, Microsoft.Marketplace.Storefront.Contracts",
+            "Conditions": {
+              "Platform": {
+                "PlatformName": "Windows.Xbox",
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PlatformCondition, Microsoft.Marketplace.Storefront.Contracts"
+              },
+              "ClassicAppKeys": [],
+              "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ActionOverrideConditions, Microsoft.Marketplace.Storefront.Contracts"
+            }
+          }]
+      }],
+    "Price": 0,
+    "PdpBackgroundColor": "#FFFFFF",
+    "SystemRequirements": {
+      "Minimum": {
+        "Items": [
+          {
+            "IsValidationPassed": true,
+            "Level": "HardBlock",
+            "Description": "Xbox console, PC, Mobile, Surface Hub, HoloLens",
+            "ItemCode": "dvc",
+            "Priority": "Default",
+            "Name": "Available on",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationItem, Microsoft.Marketplace.Storefront.Contracts"
+          },{
+            "IsValidationPassed": true,
+            "Level": "HardBlock",
+            "Description": "Windows 10 version 17134.0 or higher",
+            "ItemCode": "ops",
+            "Priority": "Default",
+            "ValidationHint": "required",
+            "Name": "OS",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationItem, Microsoft.Marketplace.Storefront.Contracts"
+          },{
+            "IsValidationPassed": true,
+            "Level": "HardBlock",
+            "Description": "Arm",
+            "ItemCode": "X86",
+            "Priority": "Default",
+            "ValidationHint": "required",
+            "Name": "Architecture",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationItem, Microsoft.Marketplace.Storefront.Contracts"
+          }],
+        "Title": "Minimum",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationCollection, Microsoft.Marketplace.Storefront.Contracts"
+      },
+      "Recommended": {
+        "Items": [
+          {
+            "IsValidationPassed": true,
+            "Level": "HardBlock",
+            "Description": "Xbox console, PC, Mobile, Surface Hub, HoloLens",
+            "ItemCode": "dvc",
+            "Priority": "Default",
+            "Name": "Available on",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationItem, Microsoft.Marketplace.Storefront.Contracts"
+          },{
+            "IsValidationPassed": true,
+            "Level": "HardBlock",
+            "Description": "Windows 10 version 17134.0 or higher",
+            "ItemCode": "ops",
+            "Priority": "Default",
+            "ValidationHint": "required",
+            "Name": "OS",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationItem, Microsoft.Marketplace.Storefront.Contracts"
+          },{
+            "IsValidationPassed": true,
+            "Level": "HardBlock",
+            "Description": "Arm",
+            "ItemCode": "X86",
+            "Priority": "Default",
+            "ValidationHint": "required",
+            "Name": "Architecture",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationItem, Microsoft.Marketplace.Storefront.Contracts"
+          }],
+        "Title": "Recommended",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SpecificationCollection, Microsoft.Marketplace.Storefront.Contracts"
+      }
+    },
+    "IsPurchaseEnabled": true,
+    "ProductRatings": [
+      {
+        "ShortName": "E",
+        "RatingId": "ESRB:E",
+        "LongName": "EVERYONE",
+        "RatingSystem": "Entertainment Software Rating Board",
+        "RestrictPurchase": false,
+        "Description": "For all ages",
+        "RatingSystemShortName": "ESRB",
+        "RatingAge": 1,
+        "RatingSystemUrl": "https://www.esrb.org/ratings-guide/",
+        "RatingDescriptors": [],
+        "RatingDisclaimers": [],
+        "RestrictMetadata": false,
+        "InteractiveElements": [],
+        "RatingSystemId": "ESRB",
+        "RatingValueLogoUrl": "https://store-images.microsoft.com/image/global.23456.image.87f616db-3cfc-4611-b3b8-c57bbb87de71.7e7baf95-3edb-4b7c-a960-75e7537b07c9",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.ProductRating, Microsoft.Marketplace.Storefront.Contracts",
+        "RatingValue": "EVERYONE"
+      }],
+    "RatingCount": 103,
+    "IsDownloadable": true,
+    "ContainsDownloadPackage": true,
+    "XboxXpa": false,
+    "DetailsDisplayConfiguration": {
+      "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.DetailsDisplayConfiguration, Microsoft.Marketplace.Storefront.Contracts"
+    },
+    "Features": [
+      "VPN","SSL","TLS","Secure connectivity"],
+    "InstallationTerms": "Get this app while signed in to your Microsoft account and install on up to ten Windows devices.",
+    "ReleaseDateUtc": "2014-04-10T14:00:28.48Z",
+    "SupportUris": [
+      {
+        "Uri": "mailto:ac-mobile-feedback@cisco.com",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V2.SupportUri, Microsoft.Marketplace.Storefront.Contracts"
+      }],
+    "PackageFamilyNames": [
+      "CiscoSystems.AnyConnect_edjcgkw48dhxt"],
+    "HasAlternateEditions": false,
+    "ShortTitle": "",
+    "AlternateIds": [
+      {
+        "AlternatedIdTypeString": "LegacyWindowsStoreProductId",
+        "AlternateIdValue": "56f0e941-8149-4cc3-9cca-3c354f4f3705",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.AlternateId, Microsoft.Marketplace.Storefront.Contracts",
+        "AlternateIdType": "LegacyWindowsStoreProductId"
+      },{
+        "AlternatedIdTypeString": "LegacyWindowsPhoneProductId",
+        "AlternateIdValue": "55443031-19e2-4592-aceb-f5ac0c08b2be",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.AlternateId, Microsoft.Marketplace.Storefront.Contracts",
+        "AlternateIdType": "LegacyWindowsPhoneProductId"
+      },{
+        "AlternatedIdTypeString": "XboxTitleId",
+        "AlternateIdValue": "1935053601",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.AlternateId, Microsoft.Marketplace.Storefront.Contracts",
+        "AlternateIdType": "XboxTitleId"
+      }],
+    "SubcategoryName": "",
+    "AvailableDevicesDisplayText": "? ? ? ?",
+    "CatalogSource": "BigCat",
+    "IsCompatible": false,
+    "Description": "Please direct any questions, feedback or problem reports to ac-mobile-feedback@cisco.com.
+
+This application is for Universal Windows Platform. The minimum supported version is Windows 10 RS4 (1803). Please contact your IT Department for Windows 10 compatible versions.
+
+AnyConnect Plus/Apex licensing and Cisco head-end hardware is required. The application is not permitted for use with legacy licensing (Essentials or Premium PLUS Mobile). AnyConnect may not be used with non-Cisco hardware under any circumstances. For more information on licensing, please see: http://www.cisco.com/c/dam/en/us/products/security/anyconnect-og.pdf. Additional licensing questions can be emailed to anyconnect-pricing@cisco.com.
+
+For a list of known issues and feature limitations, please see the release notes at:
+https://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client/products-release-notes-list.html
+
+Group URL / alternate port are supported. To use group URL or alternate port, server format must be https://fqdn[:port][/url]. port/url are optional parameters and the [ ]'s should not be used in the string. OS does not allow profile name to contain special characters so the name must be edited before saving.
+
+Please note that it is not possible to offer all AnyConnect features within the UWP framework. Please utilize the full AnyConnect application from your IT Department if additional features are needed.",
+    "PublisherCopyrightInformation": "Cisco Systems, Inc. (c) Copyright 2004 - 2019",
+    "HideFromCollections": false,
+    "PublisherId": "10231320",
+    "Capabilities": [],
+    "CollectionItemType": "Product",
+    "AllowedPlatforms": [
+      "Windows.Xbox","Windows.Desktop","Windows.Mobile","Windows.Team","Windows.Holographic"],
+    "CategoryId": "Business",
+    "Categories": [
+      "Business"],
+    "PublisherName": "Cisco Systems",
+    "RevisionId": "2022-11-22T15:17:54.7325665Z",
+    "DisplayPrice": "Free",
+    "WarningMessages": [
+      {
+        "Target": "https://support.xbox.com/xbox-one/console/photosensitive-seizure-warning",
+        "Text": "Photosensitive seizure warning",
+        "Header": "Seizure warnings",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.WarningMessage, Microsoft.Marketplace.Storefront.Contracts"
+      }],
+    "HasParentBundles": false,
+    "ProductType": "Application",
+    "Language": "en-us",
+    "PrivacyUrl": "http://www.cisco.com/web/siteassets/legal/privacy.html",
+    "ContentIds": [
+      "647156e7-85b3-b26e-1f40-b5913dc9f88b","64056582-3753-7f8b-8fb5-0fc8364fb7ab"],
+    "IsMicrosoftProduct": false,
+    "NumberOfSeasons": 0,
+    "DurationInSeconds": 0,
+    "IsUniversal": false,
+    "AppWebsiteUrl": "http://www.cisco.com/go/anyconnect",
+    "PackageAndDeviceCapabilities": [
+      "internetClientServer","privateNetworkClientServer","sharedUserCertificates","networkingVpnProvider","confirmAppClose"],
+    "ProductFamilyName": "Apps",
+    "PermissionsRequired": [
+      "Access your Internet connection and act as a server. ","Access your home or work networks","Use the software and hardware certificates available on your device","Access VPN features","Close themselves and their own windows, and delay the closing of their app"],
+    "MaxInstallSizeInBytes": 12922880,
+    "HasThirdPartyIAPs": false,
+    "MediaType": "Apps",
+    "ProductId": "9WZDNCRDJ8LH",
+    "HideFromDownloadsAndUpdates": false,
+    "ProductPartD": {
+      "Pdp": "pdpapplayout1",
+      "ModuleTags": [
+        "AppsDefaultTabs"],
+      "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ProductPartD, Microsoft.Marketplace.Storefront.Contracts"
+    },
+    "CurrencyMismatch": false,
+    "Installer": {
+      "Id": "9WZDNCRDJ8LH",
+      "Type": "WindowsUpdate",
+      "$type": "Microsoft.Marketplace.Storefront.Contracts.V9.Installer, Microsoft.Marketplace.Storefront.Contracts"
+    },
+    "Trailers": [],
+    "IsMsixvc": false,
+    "HasAddOns": false,
+    "CategoryIds": [
+      "Business"],
+    "SkusSummary": [
+      {
+        "SalePrices": [
+          {
+            "BadgeId": "default",
+            "Price": 0,
+            "DisplayPrice": "Free",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V9.SalePrice, Microsoft.Marketplace.Storefront.Contracts"
+          }],
+        "DisplayMSRP": "Free",
+        "MSRP": 0,
+        "SkuId": "0010",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V8.SkuSummary, Microsoft.Marketplace.Storefront.Contracts"
+      },{
+        "SkuId": "0011",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V8.SkuSummary, Microsoft.Marketplace.Storefront.Contracts"
+      }],
+    "IsDeviceCompanionApp": false,
+    "GamingOptionsXboxLive": false,
+    "DeveloperOptOutOfSDCardInstall": false,
+    "Title": "AnyConnect",
+    "BuiltFor": "Built for Windows 10",
+    "Accessible": false,
+    "VideoProductType": 0,
+    "Skus": [
+      {
+        "IsRental": false,
+        "Price": 0,
+        "EndDate": "9998-12-30T00:00:00Z",
+        "SkuDisplayRanks": [
+          {
+            "Rank": 0,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SkuDisplayRank, Microsoft.Marketplace.Storefront.Contracts"
+          }],
+        "HardwareWarnings": [],
+        "FulfillmentData": "{\"ProductId\":\"9WZDNCRDJ8LH\",\"WuBundleId\":\"69b25ca6-937a-4d14-bc97-dbf31e9b90db\",\"WuCategoryId\":\"56f0e941-8149-4cc3-9cca-3c354f4f3705\",\"PackageFamilyName\":\"CiscoSystems.AnyConnect_edjcgkw48dhxt\",\"SkuId\":\"0010\",\"Content\":null,\"PackageFeatures\":null}",
+        "Actions": [
+          "Details","Fulfill","Purchase","Browse","Curate","Redeem"],
+        "RemainingDaysInTrial": 0,
+        "IsPreorder": false,
+        "Description": "Please direct any questions, feedback or problem reports to ac-mobile-feedback@cisco.com.
+
+This application is for Universal Windows Platform. The minimum supported version is Windows 10 RS4 (1803). Please contact your IT Department for Windows 10 compatible versions.
+
+AnyConnect Plus/Apex licensing and Cisco head-end hardware is required. The application is not permitted for use with legacy licensing (Essentials or Premium PLUS Mobile). AnyConnect may not be used with non-Cisco hardware under any circumstances. For more information on licensing, please see: http://www.cisco.com/c/dam/en/us/products/security/anyconnect-og.pdf. Additional licensing questions can be emailed to anyconnect-pricing@cisco.com.
+
+For a list of known issues and feature limitations, please see the release notes at:
+https://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client/products-release-notes-list.html
+
+Group URL / alternate port are supported. To use group URL or alternate port, server format must be https://fqdn[:port][/url]. port/url are optional parameters and the [ ]'s should not be used in the string. OS does not allow profile name to contain special characters so the name must be edited before saving.
+
+Please note that it is not possible to offer all AnyConnect features within the UWP framework. Please utilize the full AnyConnect application from your IT Department if additional features are needed.",
+        "DisplayPrice": "Free",
+        "AvailabilityId": "B4LQTFLKRK2K",
+        "Availabilities": [
+          {
+            "AvailabilityEndDate": "9998-12-30T00:00:00Z",
+            "Price": 0,
+            "IsGamesWithGold": false,
+            "Actions": [
+              "Details","Fulfill","Purchase","Browse","Curate","Redeem"],
+            "DisplayPrice": "Free",
+            "AvailabilityId": "B4LQTFLKRK2K",
+            "PreorderReleaseDate": "0001-01-01T00:00:00Z",
+            "CurrencyMismatch": false,
+            "PromoMessageDescription": "",
+            "DisplayRank": 0,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Availability, Microsoft.Marketplace.Storefront.Contracts",
+            "RemediationRequired": false,
+            "Conditions": {
+              "ResourceSetIds": [
+                "1"],
+              "EndDate": "9998-12-30 00:00:00Z",
+              "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.AvailabilityConditions, Microsoft.Marketplace.Storefront.Contracts",
+              "StartDate": "1753-01-01 00:00:00Z",
+              "ClientConditions": {
+                "AllowedPlatforms": [
+                  {
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Desktop",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Mobile",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Team",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Xbox",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Holographic",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  }],
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.AvailabilityClientConditions, Microsoft.Marketplace.Storefront.Contracts"
+              }
+            }
+          },{
+            "AvailabilityEndDate": "9998-12-30T00:00:00Z",
+            "Price": 0,
+            "StrikethroughPrice": "",
+            "IsGamesWithGold": false,
+            "Actions": [
+              "License","Browse","Details"],
+            "DisplayPrice": "",
+            "AvailabilityId": "9RCHM5F5GZK3",
+            "PreorderReleaseDate": "0001-01-01T00:00:00Z",
+            "PromoMessage": "",
+            "CurrencyMismatch": false,
+            "PromoMessageDescription": "",
+            "DisplayRank": 1,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Availability, Microsoft.Marketplace.Storefront.Contracts",
+            "RemediationRequired": false,
+            "Conditions": {
+              "ResourceSetIds": [
+                "1"],
+              "EndDate": "9998-12-30 00:00:00Z",
+              "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.AvailabilityConditions, Microsoft.Marketplace.Storefront.Contracts",
+              "StartDate": "1753-01-01 00:00:00Z",
+              "ClientConditions": {
+                "AllowedPlatforms": [
+                  {
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Desktop",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Mobile",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Team",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Xbox",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Holographic",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  }],
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.AvailabilityClientConditions, Microsoft.Marketplace.Storefront.Contracts"
+              }
+            }
+          }],
+        "SalePrices": [
+          {
+            "BadgeId": "default",
+            "Price": 0,
+            "DisplayPrice": "Free",
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V9.SalePrice, Microsoft.Marketplace.Storefront.Contracts"
+          }],
+        "IsPaymentInstrumentRequired": false,
+        "CurrencyCode": "USD",
+        "SkuTitle": "AnyConnect",
+        "SkuButtonTitle": "",
+        "PackageRequirements": [
+          {
+            "PlatformDependencies": [
+              {
+                "PlatformName": "Windows.Universal",
+                "MaxTested": 2814751014977536,
+                "MinVersion": 2814750890000384,
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Platform, Microsoft.Marketplace.Storefront.Contracts"
+              }],
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PackageRequirements, Microsoft.Marketplace.Storefront.Contracts",
+            "HardwareRequirements": [],
+            "SupportedArchitectures": [
+              "x86"]
+          },{
+            "PlatformDependencies": [
+              {
+                "PlatformName": "Windows.Universal",
+                "MaxTested": 2814751014977536,
+                "MinVersion": 2814750890000384,
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Platform, Microsoft.Marketplace.Storefront.Contracts"
+              }],
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PackageRequirements, Microsoft.Marketplace.Storefront.Contracts",
+            "HardwareRequirements": [],
+            "SupportedArchitectures": [
+              "x64"]
+          },{
+            "PlatformDependencies": [
+              {
+                "PlatformName": "Windows.Universal",
+                "MaxTested": 2814751014977536,
+                "MinVersion": 2814750890000384,
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Platform, Microsoft.Marketplace.Storefront.Contracts"
+              }],
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PackageRequirements, Microsoft.Marketplace.Storefront.Contracts",
+            "HardwareRequirements": [],
+            "SupportedArchitectures": [
+              "arm"]
+          }],
+        "CurrencyMismatch": false,
+        "SkuType": "full",
+        "DisplayMSRP": "Free",
+        "MSAPurchaseType": "PurchaseActionMsaAllowBypass",
+        "FirstAvailableDate": "2014-04-10T14:00:28.48Z",
+        "ResourceSetId": "1",
+        "MSRP": 0,
+        "SkuId": "0010",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Sku, Microsoft.Marketplace.Storefront.Contracts",
+        "StartDate": "1753-01-01T00:00:00Z",
+        "HardwareRequirements": [],
+        "CurrencySymbol": "$",
+        "IsRepurchasable": false
+      },{
+        "IsRental": false,
+        "Price": 0,
+        "EndDate": "9998-12-30T00:00:00Z",
+        "SkuDisplayRanks": [
+          {
+            "Rank": 2,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.SkuDisplayRank, Microsoft.Marketplace.Storefront.Contracts"
+          }],
+        "StrikethroughPrice": "",
+        "HardwareWarnings": [],
+        "FulfillmentData": "{\"ProductId\":\"9WZDNCRDJ8LH\",\"WuBundleId\":\"69b25ca6-937a-4d14-bc97-dbf31e9b90db\",\"WuCategoryId\":\"56f0e941-8149-4cc3-9cca-3c354f4f3705\",\"PackageFamilyName\":\"CiscoSystems.AnyConnect_edjcgkw48dhxt\",\"SkuId\":\"0011\",\"Content\":null,\"PackageFeatures\":null}",
+        "Actions": [
+          "Details","License","Fulfill"],
+        "RemainingDaysInTrial": 0,
+        "IsPreorder": false,
+        "Description": "Please direct any questions, feedback or problem reports to ac-mobile-feedback@cisco.com.
+
+This application is for Universal Windows Platform. The minimum supported version is Windows 10 RS4 (1803). Please contact your IT Department for Windows 10 compatible versions.
+
+AnyConnect Plus/Apex licensing and Cisco head-end hardware is required. The application is not permitted for use with legacy licensing (Essentials or Premium PLUS Mobile). AnyConnect may not be used with non-Cisco hardware under any circumstances. For more information on licensing, please see: http://www.cisco.com/c/dam/en/us/products/security/anyconnect-og.pdf. Additional licensing questions can be emailed to anyconnect-pricing@cisco.com.
+
+For a list of known issues and feature limitations, please see the release notes at:
+https://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client/products-release-notes-list.html
+
+Group URL / alternate port are supported. To use group URL or alternate port, server format must be https://fqdn[:port][/url]. port/url are optional parameters and the [ ]'s should not be used in the string. OS does not allow profile name to contain special characters so the name must be edited before saving.
+
+Please note that it is not possible to offer all AnyConnect features within the UWP framework. Please utilize the full AnyConnect application from your IT Department if additional features are needed.",
+        "DisplayPrice": "",
+        "AvailabilityId": "9TSH3FSXNXCT",
+        "Availabilities": [
+          {
+            "AvailabilityEndDate": "9998-12-30T00:00:00Z",
+            "Price": 0,
+            "StrikethroughPrice": "",
+            "IsGamesWithGold": false,
+            "Actions": [
+              "Details","License","Fulfill"],
+            "DisplayPrice": "",
+            "AvailabilityId": "9TSH3FSXNXCT",
+            "PreorderReleaseDate": "0001-01-01T00:00:00Z",
+            "PromoMessage": "",
+            "CurrencyMismatch": false,
+            "PromoMessageDescription": "",
+            "DisplayRank": 0,
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Availability, Microsoft.Marketplace.Storefront.Contracts",
+            "RemediationRequired": false,
+            "Conditions": {
+              "ResourceSetIds": [
+                "1"],
+              "EndDate": "9998-12-30 00:00:00Z",
+              "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.AvailabilityConditions, Microsoft.Marketplace.Storefront.Contracts",
+              "StartDate": "1753-01-01 00:00:00Z",
+              "ClientConditions": {
+                "AllowedPlatforms": [
+                  {
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Desktop",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Mobile",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Team",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Xbox",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  },{
+                    "MaxVersion": 2147483647,
+                    "PlatformName": "Windows.Holographic",
+                    "MinVersion": 0,
+                    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ConditionPlatform, Microsoft.Marketplace.Storefront.Contracts"
+                  }],
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.AvailabilityClientConditions, Microsoft.Marketplace.Storefront.Contracts"
+              }
+            }
+          }],
+        "IsPaymentInstrumentRequired": false,
+        "SkuTitle": "AnyConnect",
+        "PromoMessage": "",
+        "SkuButtonTitle": "",
+        "PackageRequirements": [
+          {
+            "PlatformDependencies": [
+              {
+                "PlatformName": "Windows.Universal",
+                "MaxTested": 2814751014977536,
+                "MinVersion": 2814750890000384,
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Platform, Microsoft.Marketplace.Storefront.Contracts"
+              }],
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PackageRequirements, Microsoft.Marketplace.Storefront.Contracts",
+            "HardwareRequirements": [],
+            "SupportedArchitectures": [
+              "x86"]
+          },{
+            "PlatformDependencies": [
+              {
+                "PlatformName": "Windows.Universal",
+                "MaxTested": 2814751014977536,
+                "MinVersion": 2814750890000384,
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Platform, Microsoft.Marketplace.Storefront.Contracts"
+              }],
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PackageRequirements, Microsoft.Marketplace.Storefront.Contracts",
+            "HardwareRequirements": [],
+            "SupportedArchitectures": [
+              "x64"]
+          },{
+            "PlatformDependencies": [
+              {
+                "PlatformName": "Windows.Universal",
+                "MaxTested": 2814751014977536,
+                "MinVersion": 2814750890000384,
+                "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Platform, Microsoft.Marketplace.Storefront.Contracts"
+              }],
+            "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.PackageRequirements, Microsoft.Marketplace.Storefront.Contracts",
+            "HardwareRequirements": [],
+            "SupportedArchitectures": [
+              "arm"]
+          }],
+        "CurrencyMismatch": false,
+        "SkuType": "trial",
+        "MSAPurchaseType": "PurchaseActionMsaRequired",
+        "FirstAvailableDate": "2014-04-10T14:00:28.48Z",
+        "ResourceSetId": "1",
+        "SkuId": "0011",
+        "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.Sku, Microsoft.Marketplace.Storefront.Contracts",
+        "StartDate": "1753-01-01T00:00:00Z",
+        "HardwareRequirements": [],
+        "IsRepurchasable": false
+      }],
+    "ShortDescription": "",
+    "CapabilitiesTable": [],
+    "VoiceTitle": "",
+    "LastUpdateDateUtc": "2022-11-22T15:16:49Z",
+    "$type": "Microsoft.Marketplace.Storefront.Contracts.V3.ProductDetails, Microsoft.Marketplace.Storefront.Contracts",
+    "SubcategoryId": "",
+    "Version": "",
+    "NavItemId": "apps",
+    "KeyIds": [
+      "647156e7-85b3-b26e-1f40-b5913dc9f88b","64056582-3753-7f8b-8fb5-0fc8364fb7ab"],
+    "AvailableDevicesNarratorText": "PC,Xbox One,HoloLens,Mobile",
+    "AverageRating": 3.1,
+    "SupportedLanguages": [
+      "English (United States)"],
+    "AdditionalLicenseTerms": "http://www.cisco.com/c/en/us/td/docs/security/vpn_client/anyconnect/anyconnect40/license/end_user/AnyConnect-SEULA-v4-x.html",
+    "Platforms": [
+      "x86","x64","ARM","ARM64"],
+    "IsGamingAppOnly": false,
+    "DeveloperName": "Cisco Systems, Inc."
+  },
+  "ExpiryUtc": "2023-03-22T08:46:36.2978234Z",
+  "Path": "/products/9WZDNCRDJ8LH?market=US&locale=en-us&deviceFamily=Windows.Desktop",
+  "$type": "Microsoft.Marketplace.Storefront.Contracts.V1.ResponseItem, Microsoft.Marketplace.Storefront.Contracts"
+}
