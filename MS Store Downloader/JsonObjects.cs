@@ -71,4 +71,58 @@ namespace MS_Store_Downloader
         [JsonProperty("Uri")]
         public string Uri { get; set; }
     }
+
+    public class NonUWPPackageData
+    {
+        [JsonProperty("Data")]
+        public List<NonUWPPackageJson> Data { get; set; }
+    }
+
+    public class NonUWPPackageJson
+    {
+        [JsonProperty("PackageIdentifier")]
+        public string PackageIdentifier { get; set; }
+        [JsonProperty("PackageName")]
+        public string PackageName { get; set; }
+        [JsonProperty("Publisher")]
+        public string Publisher { get; set; }
+    }
+
+    public class NonUWPPackageAppsAndFeaturesEntry
+    {
+        [JsonProperty("InstallerType")]
+        public string InstallerType { get; set; }
+        [JsonProperty("DisplayName")]
+        public string DisplayName { get; set; }
+    }
+
+    public class NonUWPPackageInstaller
+    {
+        [JsonProperty("AppsAndFeaturesEntries")]
+        public List<NonUWPPackageAppsAndFeaturesEntry> AppsAndFeaturesEntries { get; set; }
+        [JsonProperty("InstallerUrl")]
+        public string InstallerUrl { get; set; }
+        [JsonProperty("InstallerLocale")]
+        public string InstallerLocale { get; set;}
+        [JsonProperty("InstallerType")]
+        public string InstallerType { get; set;}
+    }
+
+    public class NonUWPPackageDownVersions
+    {
+        [JsonProperty("Installers")]
+        public List<NonUWPPackageInstaller> Installers { get; set; }
+    }
+
+    public class NonUWPPackageDownData
+    {
+        [JsonProperty("Versions")]
+        public List<NonUWPPackageDownVersions> Versions { get; set; }
+    }
+
+    public class NonUWPPackageDown
+    {
+        [JsonProperty("Data")]
+        public NonUWPPackageDownData PackageData { get; set; }
+    }
 }

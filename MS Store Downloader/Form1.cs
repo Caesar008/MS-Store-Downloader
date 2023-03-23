@@ -81,7 +81,7 @@ namespace MS_Store_Downloader
             {
                 CategoryIDData categoryData = JsonConvert.DeserializeObject<CategoryIDData>(responseString);
                 FulfillmentData fulfillmentData = null;
-                if (categoryData.Payload.Skus.Count > 0)
+                if (categoryData.Payload.Skus.Count > 0 && categoryData.Payload.Skus[0].FulfillmentData != null)
                     fulfillmentData = JsonConvert.DeserializeObject<FulfillmentData>(categoryData.Payload.Skus[0].FulfillmentData);
                 return fulfillmentData?.WuCategoryId;
             }
@@ -118,59 +118,23 @@ namespace MS_Store_Downloader
 
             List<PackageInfo> packages = new List<PackageInfo>();
 
-
-            JsonTextReader json = new JsonTextReader(new StringReader(responseString));
-
             PackageInfo pi = new PackageInfo("", "", "", "", "", appID, -1, "");
 
-            while (json.Read())
-            {
-                if (json.Value != null)
-                {
-                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "InstallerUrl")
-                    {
-                        json.Read();
-                        if (url == "")
-                        {
-                            url = json.Value.ToString();
-                            if (type != "")
-                                break;
-                        }
-                    }
-                    //InstallerType
-                    else if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "InstallerType")
-                    {
-                        json.Read();
-                        type = json.Value.ToString();
-                        if (url != "")
-                            break;
-                    }
-                }
-            }
-            json = new JsonTextReader(new StringReader(responseString));
-            while (json.Read())
-            {
-                if (json.Value != null)
-                {
-                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "PackageName")
-                    {
-                        json.Read();
-                        if (packageName == "")
-                        {
-                            packageName = json.Value.ToString();
-                            break;
-                        }
-                    }
-                }
-            }
+            NonUWPPackageDown nonUWPPackage = JsonConvert.DeserializeObject<NonUWPPackageDown>(responseString);
 
-            if (type == "" || url.ToLower().EndsWith(".exe") || url.ToLower().EndsWith(".msi"))
+            foreach(NonUWPPackageDownVersions ver in nonUWPPackage.PackageData.Versions)
             {
-                packages.Add(new PackageInfo(url.Remove(url.LastIndexOf('.')).Remove(0, url.LastIndexOf('/') + 1), url.Remove(0, url.LastIndexOf('.')), url, "", "", appID, -1, ""));
-            }
-            else
-            {
-                packages.Add(new PackageInfo(packageName, "." + type, url, "", "", appID, -1, ""));
+                foreach(NonUWPPackageInstaller inst in ver.Installers)
+                {
+                    if (inst.InstallerType == "" || inst.InstallerUrl.ToLower().EndsWith(".exe") || inst.InstallerUrl.ToLower().EndsWith(".msi"))
+                    {
+                        packages.Add(new PackageInfo(inst.InstallerUrl.Remove(inst.InstallerUrl.LastIndexOf('.')).Remove(0, inst.InstallerUrl.LastIndexOf('/') + 1), inst.InstallerUrl.Remove(0, inst.InstallerUrl.LastIndexOf('.')), inst.InstallerUrl, "", "", appID, -1, ""));
+                    }
+                    else
+                    {
+                        packages.Add(new PackageInfo(inst.AppsAndFeaturesEntries[0].DisplayName + " (" + inst.InstallerLocale + ")", "." + inst.InstallerType, inst.InstallerUrl, "", "", appID, -1, ""));
+                    }
+                }
             }
 
             return packages;
@@ -447,38 +411,14 @@ namespace MS_Store_Downloader
 
             httpClient.Dispose();
 
-            JsonTextReader json = new JsonTextReader(new StringReader(responseString));
             List<string[]> results = new List<string[]>();
-
-            string packageID = "", packageName = "", publisher = "";
-
-            while (json.Read())
+            NonUWPPackageData nonUWPPackage = JsonConvert.DeserializeObject<NonUWPPackageData>(responseString);
+            foreach(NonUWPPackageJson njs in  nonUWPPackage.Data)
             {
-                if (json.Value != null)
-                {
-                    if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "PackageIdentifier")
-                    {
-                        json.Read();
-                        packageID = json.Value.ToString();
-                    }
-                    else if (json.TokenType == JsonToken.PropertyName && (string)json.Value == "PackageName")
-                    {
-                        json.Read();
-                        packageName = json.Value.ToString();
-                    }
-                    else if(json.TokenType == JsonToken.PropertyName && (string)json.Value == "Publisher")
-                    {
-                        json.Read();
-                        publisher = json.Value.ToString();
-                    }
-
-                    if (packageID != "" && packageName != "" && publisher != "")
-                    {
-                        results.Add(new string[] { packageID, packageName, publisher });
-                        packageID = packageName = publisher = "";
-                    }
-                }
+                results.Add(new string[] { njs.PackageIdentifier, njs.PackageName, njs.Publisher });
             }
+
+            
             if (!InvokeRequired)
                 listView2.Items.Clear();
             else
