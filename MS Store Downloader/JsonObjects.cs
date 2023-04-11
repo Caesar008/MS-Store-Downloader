@@ -96,6 +96,13 @@ namespace MS_Store_Downloader
         public string DisplayName { get; set; }
     }
 
+    public class NonUwpPackageDefaultLocale
+    {
+        [JsonProperty("PackageName")]
+        public string PackageName { get; set; }
+
+    }
+
     public class NonUWPPackageInstaller
     {
         [JsonProperty("AppsAndFeaturesEntries")]
@@ -112,6 +119,8 @@ namespace MS_Store_Downloader
     {
         [JsonProperty("Installers")]
         public List<NonUWPPackageInstaller> Installers { get; set; }
+        [JsonProperty("DefaultLocale")]
+        public NonUwpPackageDefaultLocale DefaultLocale { get; set; }
     }
 
     public class NonUWPPackageDownData

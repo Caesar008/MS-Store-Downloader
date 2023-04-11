@@ -132,7 +132,19 @@ namespace MS_Store_Downloader
                     }
                     else
                     {
-                        packages.Add(new PackageInfo(inst.AppsAndFeaturesEntries[0].DisplayName + " (" + inst.InstallerLocale + ")", "." + inst.InstallerType, inst.InstallerUrl, "", "", appID, -1, ""));
+                        string name = "";
+                        if(inst.AppsAndFeaturesEntries != null)
+                        {
+                            if(inst.AppsAndFeaturesEntries[0].DisplayName != null)
+                            {
+                                name = inst.AppsAndFeaturesEntries[0].DisplayName;
+                            }
+                        }
+                        else if(ver.DefaultLocale != null && ver.DefaultLocale.PackageName != null)
+                        {
+                            name = ver.DefaultLocale.PackageName;
+                        }
+                        packages.Add(new PackageInfo(name + " (" + inst.InstallerLocale + ")", "." + inst.InstallerType, inst.InstallerUrl, "", "", appID, -1, ""));
                     }
                 }
             }
