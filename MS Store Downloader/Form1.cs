@@ -122,34 +122,37 @@ namespace MS_Store_Downloader
 
             NonUWPPackageDown nonUWPPackage = JsonConvert.DeserializeObject<NonUWPPackageDown>(responseString);
 
-            foreach(NonUWPPackageDownVersions ver in nonUWPPackage.PackageData.Versions)
+            if (nonUWPPackage != null)
             {
-                foreach(NonUWPPackageInstaller inst in ver.Installers)
+                foreach (NonUWPPackageDownVersions ver in nonUWPPackage.PackageData.Versions)
                 {
-                    if (inst.InstallerType == "" || inst.InstallerUrl.ToLower().EndsWith(".exe") || inst.InstallerUrl.ToLower().EndsWith(".msi"))
+                    foreach (NonUWPPackageInstaller inst in ver.Installers)
                     {
-                        packages.Add(new PackageInfo(inst.InstallerUrl.Remove(inst.InstallerUrl.LastIndexOf('.')).Remove(0, inst.InstallerUrl.LastIndexOf('/') + 1), inst.InstallerUrl.Remove(0, inst.InstallerUrl.LastIndexOf('.')), inst.InstallerUrl, "", "", appID, -1, ""));
-                    }
-                    else
-                    {
-                        string name = "";
-                        if(inst.AppsAndFeaturesEntries != null)
+                        if (inst.InstallerType == "" || inst.InstallerUrl.ToLower().EndsWith(".exe") || inst.InstallerUrl.ToLower().EndsWith(".msi"))
                         {
-                            if(inst.AppsAndFeaturesEntries[0].DisplayName != null)
+                            packages.Add(new PackageInfo(inst.InstallerUrl.Remove(inst.InstallerUrl.LastIndexOf('.')).Remove(0, inst.InstallerUrl.LastIndexOf('/') + 1), inst.InstallerUrl.Remove(0, inst.InstallerUrl.LastIndexOf('.')), inst.InstallerUrl, "", "", appID, -1, ""));
+                        }
+                        else
+                        {
+                            string name = "";
+                            if (inst.AppsAndFeaturesEntries != null)
                             {
-                                name = inst.AppsAndFeaturesEntries[0].DisplayName;
+                                if (inst.AppsAndFeaturesEntries[0].DisplayName != null)
+                                {
+                                    name = inst.AppsAndFeaturesEntries[0].DisplayName;
+                                }
                             }
+                            else if (ver.DefaultLocale != null && ver.DefaultLocale.PackageName != null)
+                            {
+                                name = ver.DefaultLocale.PackageName;
+                            }
+                            packages.Add(new PackageInfo(name + " (" + inst.InstallerLocale + ")", "." + inst.InstallerType, inst.InstallerUrl, "", "", appID, -1, ""));
                         }
-                        else if(ver.DefaultLocale != null && ver.DefaultLocale.PackageName != null)
-                        {
-                            name = ver.DefaultLocale.PackageName;
-                        }
-                        packages.Add(new PackageInfo(name + " (" + inst.InstallerLocale + ")", "." + inst.InstallerType, inst.InstallerUrl, "", "", appID, -1, ""));
                     }
                 }
+                return packages;
             }
-
-            return packages;
+            return null;
         }
 
         private async Task<List<PackageInfo>> GetPackages(string xmlList, string ring)
@@ -253,6 +256,12 @@ namespace MS_Store_Downloader
             {
                 //pokud není WuCategoryID
                 packages = await GetNonAppxPackage(appID);
+            }
+
+            if(packages == null)
+            {
+                MessageBox.Show("Application not found or it is paid appliocation. This program is unable to retreive paid apps and gaimes. It can be used only for free apps.");
+                return;
             }
 
             //udělat comparer pro sortování podle jména
