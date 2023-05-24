@@ -38,7 +38,7 @@ namespace MS_Store_Downloader
             {
                 case "Retail": return "retail";
                 case "Release Preview": return "RP";
-                case "Insider Flow": return "WIS";
+                case "Insider Slow": return "WIS";
                 case "Insider Fast": return "WIF";
                 default: return "retail";
             }
