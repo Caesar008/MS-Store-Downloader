@@ -291,7 +291,7 @@ namespace MS_Store_Downloader
 //                    }
 //                    else
 //                        service = true;
-//                }
+                }
             }
 
             if (InvokeRequired)
