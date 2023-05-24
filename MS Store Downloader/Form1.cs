@@ -270,8 +270,8 @@ namespace MS_Store_Downloader
 
             foreach (PackageInfo package in packages)
             {
-                if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle" || package.Extension.ToLower() == ".exe" || package.Extension.ToLower() == ".msi")
-                {
+//                if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle" || package.Extension.ToLower() == ".exe" || package.Extension.ToLower() == ".msi")
+//                {
                     if (package.Uri != null)
                     {
                         ListViewItem lvi = new ListViewItem(new string[] { package.Name + package.Extension, ConvertSize(package.Size) });
@@ -288,10 +288,10 @@ namespace MS_Store_Downloader
                             this.BeginInvoke(new Action(() => listView1.Items.Add(lvi)));
                             this.BeginInvoke(new Action(() => listView1.EndUpdate()));
                         }
-                    }
-                    else
-                        service = true;
-                }
+//                    }
+//                    else
+//                        service = true;
+//                }
             }
 
             if (InvokeRequired)
