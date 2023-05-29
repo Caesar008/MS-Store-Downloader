@@ -38,7 +38,7 @@ namespace MS_Store_Downloader
             {
                 case "Retail": return "retail";
                 case "Release Preview": return "RP";
-                case "Insider Flow": return "WIS";
+                case "Insider Slow": return "WIS";
                 case "Insider Fast": return "WIF";
                 default: return "retail";
             }
@@ -270,7 +270,8 @@ namespace MS_Store_Downloader
 
             foreach (PackageInfo package in packages)
             {
-                if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle" || package.Extension.ToLower() == ".exe" || package.Extension.ToLower() == ".msi")
+                if (package.Extension.ToLower() == ".appx" || package.Extension.ToLower() == ".appxbundle" || package.Extension.ToLower() == ".msix" || package.Extension.ToLower() == ".msixbundle" || package.Extension.ToLower() == ".exe" || package.Extension.ToLower() == ".msi"
+                    || package.Extension.ToLower() == ".eappx" || package.Extension.ToLower() == ".eappxbundle" || package.Extension.ToLower() == ".emsix" || package.Extension.ToLower() == ".emsixbundle")
                 {
                     if (package.Uri != null)
                     {
