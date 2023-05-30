@@ -34,7 +34,7 @@
 				<XmlUpdateFragmentType>FileUrl</XmlUpdateFragmentType>
 				<XmlUpdateFragmentType>FileDecryption</XmlUpdateFragmentType>
 			</infoTypes>
-			<deviceAttributes>FlightRing={3};</deviceAttributes>
+			<deviceAttributes>FlightRing={3};DeviceFamily=Windows.Desktop;</deviceAttributes>
 		</GetExtendedUpdateInfo2>
 	</s:Body>
 </s:Envelope>
