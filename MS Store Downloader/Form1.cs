@@ -255,6 +255,7 @@ namespace MS_Store_Downloader
             if(packages.Count == 0)
             {
                 //pokud není WuCategoryID
+                //if WuCategoryID does not exists
                 packages = await GetNonAppxPackage(appID);
             }
 
@@ -265,6 +266,7 @@ namespace MS_Store_Downloader
             }
 
             //udělat comparer pro sortování podle jména
+            //create comparer to sort by name
             packages.Sort();
             bool service = false;
 
@@ -420,9 +422,11 @@ namespace MS_Store_Downloader
             else
                 button6.Enabled = false;
 
+            //app search on
             //hledání appek na https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch
             //https://github.com/ThomasPe/MS-Store-API/blob/master/endpoints/v9.0/manifestSearch.md
             //vytvoření JSON query
+            //Creating JSON query
             string jsonText = "{\"Query\": {\"KeyWord\": \"" + textBox2.Text + "\",\"MatchType\": \"Substring\"}}";
             HttpClient httpClient = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = true, UseCookies = true });
             HttpContent httpContent = new StringContent(jsonText);
