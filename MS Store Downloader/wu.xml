@@ -1,4 +1,4 @@
-﻿<s:Envelope
+<s:Envelope
 	xmlns:a="http://www.w3.org/2005/08/addressing"
 	xmlns:s="http://www.w3.org/2003/05/soap-envelope">
 	<s:Header>
@@ -87,8 +87,6 @@
 					<int>164852246</int>
 					<int>164852252</int>
 					<int>164852253</int>
-				</InstalledNonLeafUpdateIDs>
-				<OtherCachedUpdateIDs>
 					<int>10</int>
 					<int>17</int>
 					<int>2359977</int>
@@ -645,6 +643,8 @@
 					<int>168270833</int>
 					<int>168270834</int>
 					<int>168270835</int>
+				</InstalledNonLeafUpdateIDs>
+				<OtherCachedUpdateIDs>
 				</OtherCachedUpdateIDs>
 				<SkipSoftwareSync>false</SkipSoftwareSync>
 				<NeedTwoGroupOutOfScopeUpdates>true</NeedTwoGroupOutOfScopeUpdates>
@@ -663,7 +663,7 @@
 				</ExtendedUpdateInfoParameters>
 				<ProductsParameters>
 					<SyncCurrentVersionOnly>false</SyncCurrentVersionOnly>
-					<DeviceAttributes>FlightRing={3};</DeviceAttributes>
+					<DeviceAttributes>FlightRing={3};DeviceFamily=Windows.Desktop;</DeviceAttributes>
 					<CallerAttributes>Interactive=1;IsSeeker=0;</CallerAttributes>
 					<Products/>
 				</ProductsParameters>
